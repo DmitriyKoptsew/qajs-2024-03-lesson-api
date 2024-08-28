@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker'
+
 describe('Auth', () => {
   it('create user login, используется', async () => {
     const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
@@ -33,7 +35,7 @@ describe('Auth', () => {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'User-Agent': 'insomnia/9.3.2'},
       body: JSON.stringify({
-        "userName": 'user123',
+        "userName": faker.internet.userName(),
         "password": 'Qwerty1234!@122',
       }),
     })
