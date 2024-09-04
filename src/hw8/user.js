@@ -19,16 +19,29 @@ const user = {
       .set('Accept', 'application/json')
       .send(payload)
   },
+  generateToken: (payload) => {
+    return supertest(url)
+      .post('/Account/v1/GenerateToken')
+      .set('Accept', 'application/json')
+      .send(payload)
+  },
+  createBook: (token, bookData) => {
+    return supertest(url)
+      .post('/BookStore/v1/Books')
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send(bookData);
+  },
+  getBook: (isbn, token) => {
+    return supertest(url)
+      .get(`/BookStore/v1/Book?ISBN=${isbn}`)
+      .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+  },
 
   delete: (uuid) => {
     return supertest(url)
       .delete(`/Account/v1/User/${uuid}`)
-      .set('Accept', 'application/json')
-      .send()
-  },
-  getUser: (payload) => {
-    return supertest(url)
-      .get(`/Account/v1/User/${uuid}`)
       .set('Accept', 'application/json')
       .send()
   },
@@ -42,17 +55,6 @@ const user = {
   randomUserName() {
     return `${faker.person.lastName()}-${faker.person.firstName()}`;
   },
-
-  async generateToken(payload) {
-    const res = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(payload),
-    })
-    const data = await res.json()
-
-    return data
-  }
 }
 
 export default user
