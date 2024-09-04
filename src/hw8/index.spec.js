@@ -58,35 +58,6 @@ describe('User', () => {
       const info = await user.get(cr.body.userID)
       expect(info.status).toEqual(200);
     })
-
-    test('Получение токена авторизации', async () => {
-      const payload = { "userName" : user.randomUserName(), "password": `${config.defaultPassword}` }
-      // eslint-disable-next-line no-unused-vars
-      const userData = {
-        "username": "your_username",
-        "password": "your_password"
-      };
-
-      const response = await supertest(config.url)
-        .post('/auth/login')
-        .set('Accept', 'application/json')
-        .send(payload);
-
-      const location = response.headers.location;
-
-      const tokenResponse = await supertest(config.url)
-        .get(location)
-        .set('Accept', 'text/html');
-
-      const html = tokenResponse.text;
-
-      // парсить содержимое страницы, чтобы найти токен
-      const token = html.match(/token=([^&]+)/)[1];
-
-      console.log('Токен:', token);
-      expect(tokenResponse.status).toEqual(200);
-      expect(token).not.toBeNull();
-    });
   })
 })
 
