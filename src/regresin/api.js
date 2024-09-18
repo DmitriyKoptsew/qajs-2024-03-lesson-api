@@ -66,7 +66,7 @@ async function deleteUser(id) {
 }
 
 // eslint-disable-next-line no-unused-vars
-async function createUser(data) {
+async function createUser1(data) {
   const response = await fetch(`${baseUrl}/users`, {
     method: 'POST',
     headers: {
