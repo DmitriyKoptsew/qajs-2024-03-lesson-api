@@ -46,16 +46,15 @@ describe('User', () => {
     test('Удаление пользователя', async () => {
       const payload = { "userName" : user.randomUserName(), "password": `${config.defaultPassword}` }
       const cr = await user.create(payload)
-      // eslint-disable-next-line no-unused-vars
-      const res = await user.authorize(payload)
-      const del = await user.delete(cr.body.userID)
+      const auth = await user.authorize(payload)
+      const del = await user.delete(cr.body.userID, auth.body.token)
       expect(del.status).toEqual(200);
     })
 
     test('Получение информации о пользователе', async () => {
       const payload = { "userName" : user.randomUserName(), "password": `${config.defaultPassword}` }
       const cr = await user.create(payload)
-      const info = await user.get(cr.body.userID)
+      const info = await user.get(cr.body.userID, cr.body.token)
       expect(info.status).toEqual(200);
     })
   })

@@ -39,15 +39,17 @@ const user = {
       .set('Authorization', `Bearer ${token}`)
   },
 
-  delete: (uuid) => {
+  delete: (uuid, token) => {
     return supertest(url)
       .delete(`/Account/v1/User/${uuid}`)
       .set('Accept', 'application/json')
+      .auth(token, { type: 'bearer' })
       .send()
   },
-  get: (uuid) => {
+  get: (uuid, token) => {
     return supertest(url)
-      .get(`/Account/v1/User`)
+      .get(`/Account/v1/User/${uuid}`)
+      .auth(token, { type: 'bearer' })
       .set('Accept', 'application/json')
       .send()
   },
